@@ -13,18 +13,7 @@ class CartItem {
 }
 
 class Cart with ChangeNotifier {
-  Map<String, CartItem> _items = {
-    // 'f1': CartItem(
-    //   food: Food(
-    //       id: 'f1',
-    //       name: 'Plat Escalop',
-    //       image: 'images/foods/food1.png',
-    //       price: 22,
-    //       category: 'foods'),
-    //   id: 'id',
-    //   quantity: 1,
-    // ),
-  };
+  Map<String, CartItem> _items = {};
 
   Map<String, CartItem> get items {
     return {..._items};

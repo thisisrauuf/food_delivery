@@ -27,12 +27,15 @@ class Food extends ChangeNotifier {
     final url = Uri.parse(
         'https://food-delivery-d3817-default-rtdb.firebaseio.com/foods/$id.json');
     try {
-      await http.patch(
+      final response = await http.patch(
         url,
         body: jsonEncode({
           'isFavourite': isfavourite,
         }),
       );
+      if (response.statusCode >= 400) {
+        isfavourite = oldStatus;
+      }
     } catch (e) {
       isfavourite = oldStatus;
     }
