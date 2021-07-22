@@ -33,11 +33,14 @@ class CheckoutScreen extends StatelessWidget {
       ),
       bottomNavigationBar: RoundedButton2(
           buttonText: 'Order now',
-          buttonPress: () {
-            orderData.addOrder(cartItems.values.toList(), cart.totalAmount);
-            cart.clearCart();
-            Navigator.pop(context);
-          }),
+          buttonPress: cart.totalAmount <= 0
+              ? () {}
+              : () {
+                  orderData.addOrder(
+                      cartItems.values.toList(), cart.totalAmount);
+                  cart.clearCart();
+                  Navigator.pop(context);
+                }),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 30.h),
         child: Column(

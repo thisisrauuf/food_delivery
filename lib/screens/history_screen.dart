@@ -9,10 +9,11 @@ import 'package:food_delivery/providers/orders_provider.dart';
 
 class HistoryScreen extends StatelessWidget {
   static String routeName = 'history-screen';
+
   @override
   Widget build(BuildContext context) {
-    final ordersData = Provider.of<Orders>(context);
-    final orders = ordersData.orders;
+    // final ordersData = Provider.of<Orders>(context);
+    // final orders = ordersData.orders;
     return Scaffold(
       appBar: buildAppBar(
         context,
@@ -20,10 +21,28 @@ class HistoryScreen extends StatelessWidget {
         actions: Container(),
         leading: Container(),
       ),
-      body: ListView.builder(
-        itemCount: orders.length,
-        padding: EdgeInsets.only(right: 40.w, left: 40.w),
-        itemBuilder: (context, i) => OrderHistoryCard(order: orders[i]),
+      body: FutureBuilder(
+        future: Provider.of<Orders>(context, listen: false).fetchOrders(),
+        builder: (context, dataSnapshot) {
+          if (dataSnapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+                child: CircularProgressIndicator(color: kOrangeColor));
+          } else {
+            if (dataSnapshot.hasError) {
+              // error Handling stuff
+            } else {
+              return Consumer<Orders>(
+                builder: (context, ordersData, child) => ListView.builder(
+                  itemCount: ordersData.orders.length,
+                  padding: EdgeInsets.only(right: 40.w, left: 40.w),
+                  itemBuilder: (context, i) =>
+                      OrderHistoryCard(order: ordersData.orders[i]),
+                ),
+              );
+            }
+          }
+          return Container();
+        },
       ),
     );
   }
