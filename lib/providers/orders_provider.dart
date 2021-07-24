@@ -6,11 +6,13 @@ import 'package:http/http.dart' as http;
 
 class OrderItem {
   final String id;
+  final int orderNumber;
   final int amount;
   final DateTime date;
   final List<CartItem> products;
   OrderItem({
     required this.id,
+    required this.orderNumber,
     required this.amount,
     required this.date,
     required this.products,
@@ -49,6 +51,7 @@ class Orders with ChangeNotifier {
         0,
         OrderItem(
           id: key,
+          orderNumber: value['orderNumber'],
           amount: value['amount'],
           date: DateTime.parse(value['dateTime']),
           products: (value['products'] as List<dynamic>)
@@ -73,10 +76,18 @@ class Orders with ChangeNotifier {
   Future<void> addOrder(List<CartItem> cartProducts, int total) async {
     final url = Uri.parse(
         'https://food-delivery-d3817-default-rtdb.firebaseio.com/orders.json');
+    int orderNumber = 0;
+    _orders.forEach((element) {
+      if (element.orderNumber > orderNumber) {
+        orderNumber = element.orderNumber;
+      }
+    });
     final time = DateTime.now();
+
     final response = await http.post(url,
         body: jsonEncode({
           'amount': total,
+          'orderNumber': orderNumber + 1,
           'dateTime': time.toIso8601String(),
           'products': cartProducts
               .map((e) => {
@@ -93,6 +104,7 @@ class Orders with ChangeNotifier {
       0,
       OrderItem(
         id: jsonDecode(response.body)['name'],
+        orderNumber: orderNumber + 1,
         amount: total,
         date: time,
         products: cartProducts,

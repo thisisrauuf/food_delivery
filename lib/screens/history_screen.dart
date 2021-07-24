@@ -31,6 +31,26 @@ class HistoryScreen extends StatelessWidget {
             if (dataSnapshot.hasError) {
               // error Handling stuff
             } else {
+              if (Provider.of<Orders>(context, listen: false).orders.isEmpty) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.shopping_cart_outlined,
+                      color: kIconButtonColor,
+                      size: 140.sp,
+                    ),
+                    SizedBox(height: 38.h),
+                    Text(
+                      'No orders yet',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 28.sp, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                );
+              }
               return Consumer<Orders>(
                 builder: (context, ordersData, child) => ListView.builder(
                   itemCount: ordersData.orders.length,
@@ -70,7 +90,7 @@ class OrderHistoryCard extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(bottom: 10.h),
                 child: Text(
-                  'Order N° ${order.id}',
+                  'Order N° ${order.orderNumber}',
                   style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,

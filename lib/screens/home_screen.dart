@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_delivery/providers/foods_provider.dart';
+import 'package:food_delivery/providers/orders_provider.dart';
 import 'package:food_delivery/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 import '/constants.dart';
@@ -70,9 +71,12 @@ class _FoodsCarouselState extends State<FoodsCarousel> {
   // bool _isInit = true;
   @override
   void initState() {
-    Future.delayed(Duration.zero).then((_) => {
-          Provider.of<Foods>(context, listen: false).fetchData(),
-        });
+    Future.delayed(Duration.zero)
+        .then((_) => {
+              Provider.of<Foods>(context, listen: false).fetchData(),
+            })
+        .then(
+            (_) => {Provider.of<Orders>(context, listen: false).fetchOrders()});
     super.initState();
   }
   // void didChangeDependencies() {
@@ -143,6 +147,7 @@ class _FoodsCarouselState extends State<FoodsCarousel> {
                 },
               )),
         ),
+        // PageView Builder
         Padding(
           padding: EdgeInsets.only(top: 50.h),
           child: Container(

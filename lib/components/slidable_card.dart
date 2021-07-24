@@ -75,85 +75,43 @@ class SlidableCard extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(25)),
           ),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Container(
-                margin: EdgeInsets.only(right: 16.w),
-                width: 70.w,
-                height: 70.w,
-                child: Image.network(
-                  food.image,
-                  fit: BoxFit.fill,
-                ),
-              ),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                flex: 6,
+                child: Row(
                   children: [
-                    Expanded(
-                      child: Text(
-                        food.name,
-                        style: TextStyle(
-                          fontSize: 17.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    Container(
+                      margin: EdgeInsets.only(right: 16.w),
+                      width: 70.w,
+                      height: 70.w,
+                      child: Image.network(
+                        food.image,
+                        fit: BoxFit.fill,
                       ),
                     ),
                     Expanded(
-                      child: Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
                             child: Text(
-                              '${food.price} \$',
+                              food.name,
                               style: TextStyle(
-                                color: kOrangeColor,
+                                fontSize: 17.sp,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 5.w, vertical: 5.h),
-                            width: 70.w,
-                            height: 30.h,
-                            decoration: BoxDecoration(
-                              color: kOrangeColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
-                            ),
+                          Expanded(
                             child: Row(
                               children: [
                                 Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      cartData.quantityMinus(productId);
-                                    },
-                                    child: Icon(
-                                      Icons.remove,
-                                      size: 15.sp,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
                                   child: Text(
-                                    '$quantity',
-                                    textAlign: TextAlign.center,
+                                    '${food.price} \$',
                                     style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13.sp,
+                                      color: kOrangeColor,
                                       fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      cartData.quantityPlus(productId);
-                                    },
-                                    child: Icon(
-                                      Icons.add,
-                                      size: 15.sp,
-                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -162,8 +120,59 @@ class SlidableCard extends StatelessWidget {
                           )
                         ],
                       ),
-                    )
+                    ),
                   ],
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
+                  width: 70.w,
+                  height: 30.h,
+                  decoration: BoxDecoration(
+                    color: kOrangeColor,
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            cartData.quantityMinus(productId);
+                          },
+                          child: Icon(
+                            Icons.remove,
+                            size: 15.sp,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          '$quantity',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            cartData.quantityPlus(productId);
+                          },
+                          child: Icon(
+                            Icons.add,
+                            size: 15.sp,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
