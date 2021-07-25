@@ -7,6 +7,7 @@ import 'package:food_delivery/screens/my_profile.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MainScreen extends StatefulWidget {
+  static const routeName = '/main-screen';
   @override
   _MainScreenState createState() => _MainScreenState();
 }

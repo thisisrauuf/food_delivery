@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:food_delivery/providers/auth.dart';
+import 'package:food_delivery/screens/login_screen.dart';
 import 'package:food_delivery/screens/order_infos_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,6 +27,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (context) => Auth(),
+        ),
+        ChangeNotifierProvider(
           create: (context) => Foods(),
         ),
         ChangeNotifierProvider(
@@ -36,21 +41,25 @@ class MyApp extends StatelessWidget {
       ],
       child: ScreenUtilInit(
         designSize: Size(414, 896),
-        builder: () => MaterialApp(
-          theme: ThemeData(
-            fontFamily: 'SF Pro',
-            scaffoldBackgroundColor: Color(0xffF2F2F2),
+        builder: () => Consumer<Auth>(
+          builder: (ctx, auth, _) => MaterialApp(
+            theme: ThemeData(
+              fontFamily: 'SF Pro',
+              scaffoldBackgroundColor: Color(0xffF2F2F2),
+            ),
+            debugShowCheckedModeBanner: false,
+            routes: {
+              // '/': (context) => auth.isAuth ? MainScreen() : LogInScreen(),
+              '/': (context) => MainScreen(),
+              MainScreen.routeName: (context) => MainScreen(),
+              FoodDetailScreen.routeName: (context) => FoodDetailScreen(),
+              FavouriteScreen.routeName: (context) => FavouriteScreen(),
+              CartScreen.routeName: (context) => CartScreen(),
+              CheckoutScreen.routeName: (context) => CheckoutScreen(),
+              HistoryScreen.routeName: (context) => HistoryScreen(),
+              OrderInfosScreen.routeName: (context) => OrderInfosScreen(),
+            },
           ),
-          debugShowCheckedModeBanner: false,
-          routes: {
-            '/': (context) => MainScreen(),
-            FoodDetailScreen.routeName: (context) => FoodDetailScreen(),
-            FavouriteScreen.routeName: (context) => FavouriteScreen(),
-            CartScreen.routeName: (context) => CartScreen(),
-            CheckoutScreen.routeName: (context) => CheckoutScreen(),
-            HistoryScreen.routeName: (context) => HistoryScreen(),
-            OrderInfosScreen.routeName: (context) => OrderInfosScreen(),
-          },
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_delivery/providers/cart_provider.dart';
 import 'package:food_delivery/providers/foods_provider.dart';
 import 'package:food_delivery/providers/orders_provider.dart';
 import 'package:food_delivery/screens/cart_screen.dart';
@@ -19,14 +20,36 @@ class HomeScreen extends StatelessWidget {
       appBar: buildAppBar(
         context,
         title: '',
-        actions: IconButton(
-          onPressed: () {
-            Navigator.pushNamed(context, CartScreen.routeName);
-          },
-          icon: Icon(
-            Icons.shopping_cart_outlined,
-            color: kIconButtonColor,
-            size: 31.w,
+        actions: Consumer<Cart>(
+          builder: (ctx, cartData, _) => IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, CartScreen.routeName);
+            },
+            icon: Stack(
+              children: [
+                Icon(
+                  Icons.shopping_cart_outlined,
+                  color: kIconButtonColor,
+                  size: 31.w,
+                ),
+                if (cartData.itemsCount != 0)
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: CircleAvatar(
+                      backgroundColor: kOrangeColor,
+                      radius: 8,
+                      child: Center(
+                        child: Text(
+                          cartData.itemsCount.toString(),
+                          style: TextStyle(
+                              fontSize: 12.sp, fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
         leading: IconButton(
@@ -112,7 +135,7 @@ class _FoodsCarouselState extends State<FoodsCarousel> {
                       });
                     },
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      padding: EdgeInsets.only(right: 40.w),
                       child: Column(
                         children: [
                           Expanded(

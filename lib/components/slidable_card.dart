@@ -126,52 +126,56 @@ class SlidableCard extends StatelessWidget {
               ),
               Expanded(
                 flex: 2,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
-                  width: 70.w,
-                  height: 30.h,
-                  decoration: BoxDecoration(
-                    color: kOrangeColor,
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            cartData.quantityMinus(productId);
-                          },
-                          child: Icon(
-                            Icons.remove,
-                            size: 15.sp,
-                            color: Colors.white,
+                child: InkWell(
+                  onTap: () {},
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
+                    width: 70.w,
+                    height: 30.h,
+                    decoration: BoxDecoration(
+                      color: kOrangeColor,
+                      borderRadius: BorderRadius.all(Radius.circular(30)),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              cartData.quantityMinus(productId);
+                            },
+                            child: Icon(
+                              Icons.remove,
+                              size: 15.sp,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          '$quantity',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w600,
+                        Expanded(
+                          child: Text(
+                            '$quantity',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            cartData.quantityPlus(productId);
-                          },
-                          child: Icon(
-                            Icons.add,
-                            size: 15.sp,
-                            color: Colors.white,
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              cartData.quantityPlus(productId);
+                            },
+                            child: Icon(
+                              Icons.add,
+                              size: 15.sp,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

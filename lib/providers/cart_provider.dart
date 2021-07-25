@@ -43,14 +43,17 @@ class Cart with ChangeNotifier {
   }
 
   void quantityMinus(String productId) {
-    _items.update(
+    if (_items[productId]!.quantity > 1) {
+      _items.update(
         productId,
         (existingItem) => CartItem(
-              food: existingItem.food,
-              id: existingItem.id,
-              quantity: existingItem.quantity - 1,
-            ));
-    notifyListeners();
+          food: existingItem.food,
+          id: existingItem.id,
+          quantity: existingItem.quantity - 1,
+        ),
+      );
+      notifyListeners();
+    }
   }
 
   void addItem(String productId, Food food) {
