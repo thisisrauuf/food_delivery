@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:food_delivery/providers/auth.dart';
 import 'package:food_delivery/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:food_delivery/constants.dart';
@@ -194,6 +195,7 @@ class SlidableFavouriteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final foodData = Provider.of<Foods>(context, listen: false);
+    final authData = Provider.of<Auth>(context, listen: false);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.h),
       child: Slidable(
@@ -224,7 +226,8 @@ class SlidableFavouriteCard extends StatelessWidget {
               backgroundColor: kOrangeColor,
               child: IconButton(
                 onPressed: () {
-                  foodData.updateFavourite(food);
+                  foodData.updateFavourite(
+                      food, authData.token, authData.userID);
                 },
                 icon: Icon(
                   Icons.delete,

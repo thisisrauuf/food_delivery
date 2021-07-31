@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/components/appBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_delivery/components/rounded_button.dart';
+import 'package:food_delivery/providers/auth.dart';
 import 'package:food_delivery/providers/cart_provider.dart';
 import 'package:food_delivery/providers/foods_provider.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ class FoodDetailScreen extends StatelessWidget {
     final foodData = Provider.of<Foods>(context, listen: false);
     final selectedFood = foodData.findById(foodId);
     final cart = Provider.of<Cart>(context, listen: false);
+    final authData = Provider.of<Auth>(context, listen: false);
 
     return Scaffold(
       appBar: buildAppBar(
@@ -25,7 +27,8 @@ class FoodDetailScreen extends StatelessWidget {
         actions: Consumer<Foods>(
           builder: (context, foodData, _) => IconButton(
             onPressed: () {
-              foodData.updateFavourite(selectedFood);
+              foodData.updateFavourite(
+                  selectedFood, authData.token, authData.userID);
             },
             icon: selectedFood.isfavourite
                 ? Icon(Icons.favorite, color: Colors.red, size: 31.w)

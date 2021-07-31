@@ -1,8 +1,10 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:food_delivery/providers/cart_provider.dart';
 import 'package:food_delivery/providers/foods_provider.dart';
-import 'package:http/http.dart' as http;
 
 class OrderItem {
   final String id;
@@ -20,7 +22,9 @@ class OrderItem {
 }
 
 class Orders with ChangeNotifier {
+  final String authToken;
   List<OrderItem> _orders = [];
+  Orders(this.authToken, this._orders);
 
   List<OrderItem> get orders {
     return [..._orders];
@@ -38,7 +42,7 @@ class Orders with ChangeNotifier {
 
   Future<void> fetchOrders() async {
     final url = Uri.parse(
-        'https://food-delivery-d3817-default-rtdb.firebaseio.com/orders.json');
+        'https://food-delivery-d3817-default-rtdb.firebaseio.com/orders.json?auth=$authToken');
     final response = await http.get(url);
     List<OrderItem> loadedOrders = [];
     dynamic jsonBody = jsonDecode(response.body);
@@ -75,7 +79,7 @@ class Orders with ChangeNotifier {
 
   Future<void> addOrder(List<CartItem> cartProducts, int total) async {
     final url = Uri.parse(
-        'https://food-delivery-d3817-default-rtdb.firebaseio.com/orders.json');
+        'https://food-delivery-d3817-default-rtdb.firebaseio.com/orders.json?auth=$authToken');
     int orderNumber = 0;
     _orders.forEach((element) {
       if (element.orderNumber > orderNumber) {

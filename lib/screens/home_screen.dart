@@ -90,16 +90,19 @@ class FoodsCarousel extends StatefulWidget {
 }
 
 class _FoodsCarouselState extends State<FoodsCarousel> {
+  var pageController = PageController(
+    initialPage: 0,
+    viewportFraction: 0.8,
+  );
   int selectedIndex = 0;
   // bool _isInit = true;
   @override
   void initState() {
-    Future.delayed(Duration.zero)
-        .then((_) => {
-              Provider.of<Foods>(context, listen: false).fetchData(),
-            })
-        .then(
-            (_) => {Provider.of<Orders>(context, listen: false).fetchOrders()});
+    Future.delayed(Duration.zero).then((_) => {
+          Provider.of<Foods>(context, listen: false).fetchData(),
+        });
+    // .then(
+    //     (_) => {Provider.of<Orders>(context, listen: false).fetchOrders()});
     super.initState();
   }
   // void didChangeDependencies() {
@@ -132,6 +135,11 @@ class _FoodsCarouselState extends State<FoodsCarousel> {
                     onTap: () {
                       setState(() {
                         selectedIndex = index;
+                        pageController.animateToPage(
+                          0,
+                          duration: Duration(milliseconds: 750),
+                          curve: Curves.fastLinearToSlowEaseIn,
+                        );
                       });
                     },
                     child: Padding(
@@ -177,11 +185,8 @@ class _FoodsCarouselState extends State<FoodsCarousel> {
             width: double.infinity,
             height: 350.h,
             child: PageView.builder(
-              // onPageChanged: (value) {},
-              controller: PageController(
-                initialPage: 0,
-                viewportFraction: 0.8,
-              ),
+              physics: BouncingScrollPhysics(),
+              controller: pageController,
               itemCount: foods.length,
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () {

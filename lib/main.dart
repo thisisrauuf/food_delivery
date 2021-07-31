@@ -29,15 +29,25 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => Auth(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => Foods(),
+        ChangeNotifierProxyProvider<Auth, Foods>(
+          create: (_) => Foods('', '', []),
+          update: (_, auth, previousFoods) =>
+              Foods(auth.token, auth.userID, previousFoods!.foods),
         ),
+        // ChangeNotifierProvider(
+        //   create: (context) => Foods(),
+        // ),
         ChangeNotifierProvider(
           create: (context) => Cart(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => Orders(),
+        ChangeNotifierProxyProvider<Auth, Orders>(
+          create: (_) => Orders('', []),
+          update: (_, auth, previousFoods) =>
+              Orders(auth.token, previousFoods!.orders),
         ),
+        // ChangeNotifierProvider(
+        //   create: (context) => Orders(),
+        // ),
       ],
       child: ScreenUtilInit(
         designSize: Size(414, 896),
@@ -49,8 +59,8 @@ class MyApp extends StatelessWidget {
             ),
             debugShowCheckedModeBanner: false,
             routes: {
-              // '/': (context) => auth.isAuth ? MainScreen() : LogInScreen(),
-              '/': (context) => MainScreen(),
+              '/': (context) => auth.isAuth ? MainScreen() : LogInScreen(),
+              // '/': (context) => MainScreen(),
               MainScreen.routeName: (context) => MainScreen(),
               FoodDetailScreen.routeName: (context) => FoodDetailScreen(),
               FavouriteScreen.routeName: (context) => FavouriteScreen(),
