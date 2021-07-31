@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_delivery/components/appDrawer.dart';
 import 'package:food_delivery/providers/cart_provider.dart';
 import 'package:food_delivery/providers/foods_provider.dart';
-import 'package:food_delivery/providers/orders_provider.dart';
 import 'package:food_delivery/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 import '/constants.dart';
@@ -13,10 +13,13 @@ import 'food_details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static String routeName = 'home-screen';
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
+      drawer: AppDrawer(),
       appBar: buildAppBar(
         context,
         title: '',
@@ -53,7 +56,9 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            _key.currentState!.openDrawer();
+          },
           icon: Image.asset('images/icons/icon_list.png'),
         ),
       ),

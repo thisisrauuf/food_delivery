@@ -23,18 +23,13 @@ class OrderItem {
 
 class Orders with ChangeNotifier {
   final String authToken;
+  final String userID;
   List<OrderItem> _orders = [];
-  Orders(this.authToken, this._orders);
+  Orders(this.authToken, this.userID, this._orders);
 
   List<OrderItem> get orders {
     return [..._orders];
   }
-
-  // int counter = 00000;
-  // String putID() {
-  //   counter++;
-  //   return counter.toString();
-  // }
 
   int countItems(OrderItem order) {
     return order.products.length;
@@ -42,7 +37,7 @@ class Orders with ChangeNotifier {
 
   Future<void> fetchOrders() async {
     final url = Uri.parse(
-        'https://food-delivery-d3817-default-rtdb.firebaseio.com/orders.json?auth=$authToken');
+        'https://food-delivery-d3817-default-rtdb.firebaseio.com/orders/$userID.json?auth=$authToken');
     final response = await http.get(url);
     List<OrderItem> loadedOrders = [];
     dynamic jsonBody = jsonDecode(response.body);
@@ -79,7 +74,7 @@ class Orders with ChangeNotifier {
 
   Future<void> addOrder(List<CartItem> cartProducts, int total) async {
     final url = Uri.parse(
-        'https://food-delivery-d3817-default-rtdb.firebaseio.com/orders.json?auth=$authToken');
+        'https://food-delivery-d3817-default-rtdb.firebaseio.com/orders/$userID.json?auth=$authToken');
     int orderNumber = 0;
     _orders.forEach((element) {
       if (element.orderNumber > orderNumber) {

@@ -82,4 +82,11 @@ class Auth with ChangeNotifier {
       throw e;
     }
   }
+
+  void logout() {
+    _token = '';
+    _userId = '';
+
+    notifyListeners();
+  }
 }
