@@ -188,3 +188,59 @@
     //     price: 12,
     //     category: 'Drink',
     //     isfavourite: false),
+
+
+
+    // final url = Uri.parse(
+    //     'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDBj8qd47FhNb8-DZgbe3R2pV7Gj8PlElw');
+    // try {
+    //   final response = await http.post(
+    //     url,
+    //     body: jsonEncode(
+    //       {
+    //         'email': email,
+    //         'password': password,
+    //         'returnSecureToken': true,
+    //       },
+    //     ),
+    //   );
+    //   final responseData = jsonDecode(response.body);
+    //   if (responseData['error'] != null) {
+    //     throw HttpException(responseData['error']['message']);
+    //   }
+    //   _token = responseData['idToken'];
+    //   _userId = responseData['localId'];
+    //   _expiryDate = DateTime.now()
+    //       .add(Duration(seconds: int.parse(responseData['expiresIn'])));
+    //   notifyListeners();
+    // } catch (e) {
+    //   throw e;
+    // }
+
+
+
+// final url = Uri.parse(
+    //     'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDBj8qd47FhNb8-DZgbe3R2pV7Gj8PlElw');
+    // try {
+    //   final response = await http.post(
+    //     url,
+    //     body: jsonEncode(
+    //       {
+    //         'email': email,
+    //         'password': password,
+    //         'returnSecureToken': true,
+    //       },
+    //     ),
+    //   );
+    //   final responseData = jsonDecode(response.body);
+    //   if (responseData['error'] != null) {
+    //     throw HttpException(responseData['error']['message']);
+    //   }
+    //   _token = responseData['idToken'];
+    //   _userId = responseData['localId'];
+    //   // _expiryDate = DateTime.now()
+    //   //     .add(Duration(seconds: int.parse(responseData['expiresIn'])));
+    //   notifyListeners();
+    // } catch (e) {
+    //   throw e;
+    // }

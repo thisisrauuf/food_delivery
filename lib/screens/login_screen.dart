@@ -56,6 +56,9 @@ class _LogInScreenState extends State<LogInScreen> {
         // Log user in
         await Provider.of<Auth>(context, listen: false).login(
             _authData['email'].toString(), _authData['password'].toString());
+        setState(() {
+          _isLoading = false;
+        });
       } else {
         // Sign user up
         await Provider.of<Auth>(context, listen: false).signup(

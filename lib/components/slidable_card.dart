@@ -226,8 +226,8 @@ class SlidableFavouriteCard extends StatelessWidget {
               backgroundColor: kOrangeColor,
               child: IconButton(
                 onPressed: () {
-                  foodData.updateFavourite(
-                      food, authData.token, authData.userID);
+                  // foodData.updateFavourite(
+                  //     food, authData.token, authData.userID);
                 },
                 icon: Icon(
                   Icons.delete,

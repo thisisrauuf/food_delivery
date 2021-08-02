@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,10 +24,10 @@ class OrderItem {
 }
 
 class Orders with ChangeNotifier {
-  final String authToken;
-  final String userID;
+  // final String authToken;
+
+  // Orders(this.authToken, this.userID, this._orders);
   List<OrderItem> _orders = [];
-  Orders(this.authToken, this.userID, this._orders);
 
   List<OrderItem> get orders {
     return [..._orders];
@@ -36,43 +38,59 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> fetchOrders() async {
-    final url = Uri.parse(
-        'https://food-delivery-d3817-default-rtdb.firebaseio.com/orders/$userID.json?auth=$authToken');
-    final response = await http.get(url);
-    List<OrderItem> loadedOrders = [];
-    dynamic jsonBody = jsonDecode(response.body);
-    if (jsonBody == null) {
-      return;
-    }
-    final extractedData = jsonBody as Map<String, dynamic>;
-    extractedData.forEach((key, value) {
-      loadedOrders.insert(
-        0,
-        OrderItem(
-          id: key,
-          orderNumber: value['orderNumber'],
-          amount: value['amount'],
-          date: DateTime.parse(value['dateTime']),
-          products: (value['products'] as List<dynamic>)
-              .map((item) => CartItem(
-                    food: Food(
-                        id: item['id'],
-                        name: item['foodTitle'],
-                        image: item['foodImageUrl'],
-                        price: item['foodPrice'],
-                        category: item['foodCategory']),
-                    id: item['id'],
-                    quantity: item['quantity'],
-                  ))
-              .toList(),
-        ),
-      );
+    final userID = FirebaseAuth.instance.currentUser!.uid;
+    print(userID);
+    final data = await FirebaseFirestore.instance
+        .collection('orders/$userID/userOrders')
+        .get();
+    data.docs.forEach((document) {
+      print(document.id);
+      print(document['amount']);
+      print(document['dateTime']);
+      // print(document.get('products'));
     });
-    _orders = loadedOrders;
-    notifyListeners();
+
+    // String authToken = await FirebaseAuth.instance.currentUser!.getIdToken();
+    // String userID = FirebaseAuth.instance.currentUser!.uid;
+    // final url = Uri.parse(
+    //     'https://food-delivery-d3817-default-rtdb.firebaseio.com/orders/$userID.json?auth=$authToken');
+    // final response = await http.get(url);
+    // List<OrderItem> loadedOrders = [];
+    // dynamic jsonBody = jsonDecode(response.body);
+    // if (jsonBody == null) {
+    //   return;
+    // }
+    // final extractedData = jsonBody as Map<String, dynamic>;
+    // extractedData.forEach((key, value) {
+    //   loadedOrders.insert(
+    //     0,
+    //     OrderItem(
+    //       id: key,
+    //       orderNumber: value['orderNumber'],
+    //       amount: value['amount'],
+    //       date: DateTime.parse(value['dateTime']),
+    //       products: (value['products'] as List<dynamic>)
+    //           .map((item) => CartItem(
+    //                 food: Food(
+    //                     id: item['id'],
+    //                     name: item['foodTitle'],
+    //                     image: item['foodImageUrl'],
+    //                     price: item['foodPrice'],
+    //                     category: item['foodCategory']),
+    //                 id: item['id'],
+    //                 quantity: item['quantity'],
+    //               ))
+    //           .toList(),
+    //     ),
+    //   );
+    // });
+    // _orders = loadedOrders;
+    // notifyListeners();
   }
 
   Future<void> addOrder(List<CartItem> cartProducts, int total) async {
+    String authToken = await FirebaseAuth.instance.currentUser!.getIdToken();
+    String userID = FirebaseAuth.instance.currentUser!.uid;
     final url = Uri.parse(
         'https://food-delivery-d3817-default-rtdb.firebaseio.com/orders/$userID.json?auth=$authToken');
     int orderNumber = 0;
