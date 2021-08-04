@@ -90,9 +90,9 @@ class OrderHistoryCard extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(bottom: 10.h),
                 child: Text(
-                  'Order N° ${order.orderNumber}',
+                  'Order id: ${order.id}',
                   style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: kOrangeColor),
                 ),
@@ -131,7 +131,7 @@ class OrderHistoryCard extends StatelessWidget {
                   children: [
                     Text('Order date'),
                     Text(
-                      '${DateFormat('dd-MM-yyyy  hh:mm').format(order.date)}',
+                      '${DateFormat('dd-MM-yyyy  HH:mm').format(order.date)}',
                       style: kHistoryCardTextStyle,
                     ),
                   ],

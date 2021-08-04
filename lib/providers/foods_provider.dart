@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 class Food extends ChangeNotifier {
@@ -43,9 +44,6 @@ class Food extends ChangeNotifier {
 }
 
 class Foods extends ChangeNotifier {
-  // String authToken;
-  // String userID;
-  // Foods(this.authToken, this.userID, this._foods);
   List<Food> _foods = [];
 
   Future<void> fetchData() async {
@@ -63,39 +61,11 @@ class Foods extends ChangeNotifier {
       });
       _foods = loadedFoods;
       notifyListeners();
-    } catch (e) {
-      print(e);
+    } on PlatformException catch (error) {
+      print(error.message);
+    } catch (error) {
+      print(error);
     }
-    // String authToken = await FirebaseAuth.instance.currentUser!.getIdToken();
-    // String userID = FirebaseAuth.instance.currentUser!.uid;
-    // final url = Uri.parse(
-    //     'https://food-delivery-d3817-default-rtdb.firebaseio.com/foods.json?auth=$authToken');
-    // final url2 = Uri.parse(
-    //     'https://food-delivery-d3817-default-rtdb.firebaseio.com/userFavourites/$userID.json?auth=$authToken');
-    // try {
-    //   final response = await http.get(url);
-    //   final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
-    //   final favouriteResponse = await http.get(url2);
-    //   final favouriteData = jsonDecode(favouriteResponse.body);
-    //   List<Food> loadedFoods = [];
-    //   extractedData.forEach((foodID, foodData) {
-    //     loadedFoods.add(
-    //       Food(
-    //         id: foodID,
-    //         name: foodData['title'],
-    //         image: foodData['imageUrl'],
-    //         price: foodData['price'],
-    //         category: foodData['category'],
-    //         isfavourite:
-    //             favouriteData == null ? false : favouriteData[foodID] ?? false,
-    //       ),
-    //     );
-    //   });
-    //   _foods = loadedFoods;
-    //   notifyListeners();
-    // } catch (e) {
-    //   throw (e);
-    // }
   }
 
   UnmodifiableListView<Food> get foods => UnmodifiableListView(_foods);

@@ -43,14 +43,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => Cart(),
         ),
-        // ChangeNotifierProxyProvider<Auth, Orders>(
-        //   create: (_) => Orders('', '', []),
-        //   update: (_, auth, previousFoods) =>
-        //       Orders(auth.token, auth.userID, previousFoods!.orders),
-        // ),
-        ChangeNotifierProvider(
-          create: (context) => Orders(),
+        ChangeNotifierProxyProvider<Foods, Orders>(
+          create: (_) => Orders([], []),
+          update: (_, foods, previousOrders) =>
+              Orders(foods.foods, previousOrders!.orders),
         ),
+        // ChangeNotifierProvider(
+        //   create: (context) => Orders(),
+        // ),
       ],
       child: ScreenUtilInit(
         designSize: Size(414, 896),

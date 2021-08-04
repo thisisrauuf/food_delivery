@@ -74,9 +74,187 @@
 //   }
 // }
 
+// ------------------------------------------------------
 
 
-// Food(
+// ------------------------------------------------------
+
+    // final url = Uri.parse(
+    //     'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDBj8qd47FhNb8-DZgbe3R2pV7Gj8PlElw');
+    // try {
+    //   final response = await http.post(
+    //     url,
+    //     body: jsonEncode(
+    //       {
+    //         'email': email,
+    //         'password': password,
+    //         'returnSecureToken': true,
+    //       },
+    //     ),
+    //   );
+    //   final responseData = jsonDecode(response.body);
+    //   if (responseData['error'] != null) {
+    //     throw HttpException(responseData['error']['message']);
+    //   }
+    //   _token = responseData['idToken'];
+    //   _userId = responseData['localId'];
+    //   _expiryDate = DateTime.now()
+    //       .add(Duration(seconds: int.parse(responseData['expiresIn'])));
+    //   notifyListeners();
+    // } catch (e) {
+    //   throw e;
+    // }
+
+// ------------------------------------------------------
+
+// final url = Uri.parse(
+    //     'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDBj8qd47FhNb8-DZgbe3R2pV7Gj8PlElw');
+    // try {
+    //   final response = await http.post(
+    //     url,
+    //     body: jsonEncode(
+    //       {
+    //         'email': email,
+    //         'password': password,
+    //         'returnSecureToken': true,
+    //       },
+    //     ),
+    //   );
+    //   final responseData = jsonDecode(response.body);
+    //   if (responseData['error'] != null) {
+    //     throw HttpException(responseData['error']['message']);
+    //   }
+    //   _token = responseData['idToken'];
+    //   _userId = responseData['localId'];
+    //   // _expiryDate = DateTime.now()
+    //   //     .add(Duration(seconds: int.parse(responseData['expiresIn'])));
+    //   notifyListeners();
+    // } catch (e) {
+    //   throw e;
+    // }
+
+// ------------------------------------------------------
+
+// Fetch Orders 
+
+// String authToken = await FirebaseAuth.instance.currentUser!.getIdToken();
+    // String userID = FirebaseAuth.instance.currentUser!.uid;
+    // final url = Uri.parse(
+    //     'https://food-delivery-d3817-default-rtdb.firebaseio.com/orders/$userID.json?auth=$authToken');
+    // final response = await http.get(url);
+    // List<OrderItem> loadedOrders = [];
+    // dynamic jsonBody = jsonDecode(response.body);
+    // if (jsonBody == null) {
+    //   return;
+    // }
+    // final extractedData = jsonBody as Map<String, dynamic>;
+    // extractedData.forEach((key, value) {
+    //   loadedOrders.insert(
+    //     0,
+    //     OrderItem(
+    //       id: key,
+    //       orderNumber: value['orderNumber'],
+    //       amount: value['amount'],
+    //       date: DateTime.parse(value['dateTime']),
+    //       products: (value['products'] as List<dynamic>)
+    //           .map((item) => CartItem(
+    //                 food: Food(
+    //                     id: item['id'],
+    //                     name: item['foodTitle'],
+    //                     image: item['foodImageUrl'],
+    //                     price: item['foodPrice'],
+    //                     category: item['foodCategory']),
+    //                 id: item['id'],
+    //                 quantity: item['quantity'],
+    //               ))
+    //           .toList(),
+    //     ),
+    //   );
+    // });
+    // _orders = loadedOrders;
+    // notifyListeners();    
+
+// ------------------------------------------------------
+
+// add order
+
+// String authToken = await FirebaseAuth.instance.currentUser!.getIdToken();
+    // String userID = FirebaseAuth.instance.currentUser!.uid;
+    // final url = Uri.parse(
+    //     'https://food-delivery-d3817-default-rtdb.firebaseio.com/orders/$userID.json?auth=$authToken');
+    // int orderNumber = 0;
+    // _orders.forEach((element) {
+    //   if (element.orderNumber > orderNumber) {
+    //     orderNumber = element.orderNumber;
+    //   }
+    // });
+    // final time = DateTime.now();
+
+    // final response = await http.post(url,
+    //     body: jsonEncode({
+    //       'amount': total,
+    //       'orderNumber': orderNumber + 1,
+    //       'dateTime': time.toIso8601String(),
+    //       'products': cartProducts
+    //           .map((e) => {
+    //                 'id': e.id,
+    //                 'quantity': e.quantity,
+    //                 'foodTitle': e.food.name,
+    //                 'foodCategory': e.food.category,
+    //                 'foodImageUrl': e.food.image,
+    //                 'foodPrice': e.food.price,
+    //               })
+    //           .toList(),
+    //     }));
+    // _orders.insert(
+    //   0,
+    //   OrderItem(
+    //     id: jsonDecode(response.body)['name'],
+    //     orderNumber: orderNumber + 1,
+    //     amount: total,
+    //     date: time,
+    //     products: cartProducts,
+    //   ),
+    // );
+    // notifyListeners();
+
+// ------------------------------------------------------
+
+// fetch Foods
+
+// String authToken = await FirebaseAuth.instance.currentUser!.getIdToken();
+    // String userID = FirebaseAuth.instance.currentUser!.uid;
+    // final url = Uri.parse(
+    //     'https://food-delivery-d3817-default-rtdb.firebaseio.com/foods.json?auth=$authToken');
+    // final url2 = Uri.parse(
+    //     'https://food-delivery-d3817-default-rtdb.firebaseio.com/userFavourites/$userID.json?auth=$authToken');
+    // try {
+    //   final response = await http.get(url);
+    //   final extractedData = jsonDecode(response.body) as Map<String, dynamic>;
+    //   final favouriteResponse = await http.get(url2);
+    //   final favouriteData = jsonDecode(favouriteResponse.body);
+    //   List<Food> loadedFoods = [];
+    //   extractedData.forEach((foodID, foodData) {
+    //     loadedFoods.add(
+    //       Food(
+    //         id: foodID,
+    //         name: foodData['title'],
+    //         image: foodData['imageUrl'],
+    //         price: foodData['price'],
+    //         category: foodData['category'],
+    //         isfavourite:
+    //             favouriteData == null ? false : favouriteData[foodID] ?? false,
+    //       ),
+    //     );
+    //   });
+    //   _foods = loadedFoods;
+    //   notifyListeners();
+    // } catch (e) {
+    //   throw (e);
+    // }
+// ------------------------------------------------------
+
+    // Food(
     //     id: 'f1',
     //     name: 'Steak plat',
     //     image: 'https://i.ibb.co/c1GZc8Z/plat1.png',
@@ -188,59 +366,3 @@
     //     price: 12,
     //     category: 'Drink',
     //     isfavourite: false),
-
-
-
-    // final url = Uri.parse(
-    //     'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDBj8qd47FhNb8-DZgbe3R2pV7Gj8PlElw');
-    // try {
-    //   final response = await http.post(
-    //     url,
-    //     body: jsonEncode(
-    //       {
-    //         'email': email,
-    //         'password': password,
-    //         'returnSecureToken': true,
-    //       },
-    //     ),
-    //   );
-    //   final responseData = jsonDecode(response.body);
-    //   if (responseData['error'] != null) {
-    //     throw HttpException(responseData['error']['message']);
-    //   }
-    //   _token = responseData['idToken'];
-    //   _userId = responseData['localId'];
-    //   _expiryDate = DateTime.now()
-    //       .add(Duration(seconds: int.parse(responseData['expiresIn'])));
-    //   notifyListeners();
-    // } catch (e) {
-    //   throw e;
-    // }
-
-
-
-// final url = Uri.parse(
-    //     'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDBj8qd47FhNb8-DZgbe3R2pV7Gj8PlElw');
-    // try {
-    //   final response = await http.post(
-    //     url,
-    //     body: jsonEncode(
-    //       {
-    //         'email': email,
-    //         'password': password,
-    //         'returnSecureToken': true,
-    //       },
-    //     ),
-    //   );
-    //   final responseData = jsonDecode(response.body);
-    //   if (responseData['error'] != null) {
-    //     throw HttpException(responseData['error']['message']);
-    //   }
-    //   _token = responseData['idToken'];
-    //   _userId = responseData['localId'];
-    //   // _expiryDate = DateTime.now()
-    //   //     .add(Duration(seconds: int.parse(responseData['expiresIn'])));
-    //   notifyListeners();
-    // } catch (e) {
-    //   throw e;
-    // }
