@@ -27,8 +27,7 @@ class FoodDetailScreen extends StatelessWidget {
         actions: Consumer<Foods>(
           builder: (context, foodData, _) => IconButton(
             onPressed: () {
-              // foodData.updateFavourite(
-              //     selectedFood, authData.token, authData.userID);
+              foodData.updateFavourite(selectedFood);
             },
             icon: selectedFood.isfavourite
                 ? Icon(Icons.favorite, color: Colors.red, size: 31.w)

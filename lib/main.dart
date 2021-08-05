@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:food_delivery/providers/auth.dart';
 import 'package:food_delivery/screens/login_screen.dart';
 import 'package:food_delivery/screens/order_infos_screen.dart';
+import 'package:food_delivery/screens/splash_screen.dart';
+import 'package:food_delivery/screens/terbaj.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '/providers/cart_provider.dart';
@@ -63,6 +65,9 @@ class MyApp extends StatelessWidget {
           home: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, userSnapshot) {
+              if (userSnapshot.connectionState == ConnectionState.waiting) {
+                return SplashScreen();
+              }
               if (userSnapshot.hasData) {
                 return MainScreen();
               }
