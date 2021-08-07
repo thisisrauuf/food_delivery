@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:food_delivery/providers/auth.dart';
 import 'package:food_delivery/screens/login_screen.dart';
 import 'package:food_delivery/screens/order_infos_screen.dart';
+import 'package:food_delivery/screens/search_screen.dart';
 import 'package:food_delivery/screens/splash_screen.dart';
 import 'package:food_delivery/screens/terbaj.dart';
 import 'package:provider/provider.dart';
@@ -84,6 +85,7 @@ class MyApp extends StatelessWidget {
             CheckoutScreen.routeName: (context) => CheckoutScreen(),
             HistoryScreen.routeName: (context) => HistoryScreen(),
             OrderInfosScreen.routeName: (context) => OrderInfosScreen(),
+            SearchScreen.routName: (context) => SearchScreen(),
           },
         ),
       ),

@@ -77,6 +77,19 @@
 
 // ------------------------------------------------------
 
+// buildAppBar2(
+//         context,
+//         title: searchResult,
+//         actions: Container(),
+//         leading: IconButton(
+//           onPressed: () {},
+//           icon: Icon(
+//             Icons.chevron_left,
+//             color: Colors.black,
+//             size: 31.w,
+//           ),
+//         ),
+//       ),
 
 // ------------------------------------------------------
 

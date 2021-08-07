@@ -118,4 +118,11 @@ class Foods extends ChangeNotifier {
   List<Food> findByCategory(String category) {
     return _foods.where((element) => element.category == category).toList();
   }
+
+  List<Food> searchFood(String searchInput) {
+    return _foods
+        .where((element) =>
+            element.name.toLowerCase().contains(searchInput.toLowerCase()))
+        .toList();
+  }
 }
