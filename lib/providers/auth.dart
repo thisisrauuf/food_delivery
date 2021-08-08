@@ -1,34 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:food_delivery/models/http_execption.dart';
 
 class Auth with ChangeNotifier {
-  // var _token;
-  // var _userId;
-
-  // bool get isAuth {
-  //   return token != '';
-  // }
-
-  // String get userID {
-  //   return _userId;
-  // }
-
-  // String get token {
-  //   if (_token != null) {
-  //     return _token;
-  //   }
-  //   return '';
-  // }
-
-  Future<void> signup(String email, String password) async {
+  Future<void> signup(String email, String password, String phone) async {
     try {
       await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-    } on PlatformException catch (e) {
-      print(e.message);
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) => {
+                FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(value.user!.uid)
+                    .set({
+                  'email': email,
+                  'phoneNumber': phone,
+                })
+              });
+      // String userID = FirebaseAuth.instance.currentUser!.uid;
+      // FirebaseFirestore.instance.collection('userExtraData').doc(userID).set({
+      //   'email': email,
+      //   'phoneNumber':
+      // });
     } catch (error) {
-      print(error);
+      throw HttpException(error.toString());
     }
   }
 
@@ -36,10 +31,8 @@ class Auth with ChangeNotifier {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-    } on PlatformException catch (e) {
-      print(e.message);
     } catch (error) {
-      print(error);
+      throw HttpException(error.toString());
     }
   }
 

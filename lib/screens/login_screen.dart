@@ -20,6 +20,7 @@ class _LogInScreenState extends State<LogInScreen> {
   Map<String, String> _authData = {
     'email': '',
     'password': '',
+    'phone': '',
   };
   var _isLoading = false;
   final _passwordController = TextEditingController();
@@ -62,17 +63,20 @@ class _LogInScreenState extends State<LogInScreen> {
       } else {
         // Sign user up
         await Provider.of<Auth>(context, listen: false).signup(
-            _authData['email'].toString(), _authData['password'].toString());
+            _authData['email'].toString(),
+            _authData['password'].toString(),
+            _authData['phone'].toString());
       }
     } on HttpException catch (error) {
       var errorMessage = 'Authentication failed';
-      if (error.toString().contains('EMAIL_EXISTS')) {
-        errorMessage = 'This email address is already in use';
-      } else if (error.toString().contains('INVALID_EMAIL')) {
+      if (error.message.contains('email-already-in-use')) {
+        errorMessage =
+            'This email address is already in use, try another email';
+      } else if (error.message.contains('invalid-email')) {
         errorMessage = 'Invalid email address';
-      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+      } else if (error.message.contains('user-not-found')) {
         errorMessage = 'Could not find this email';
-      } else if (error.toString().contains('INVALID_PASSWORD')) {
+      } else if (error.message.contains('wrong-password')) {
         errorMessage = 'Invalid password';
       }
       _showDialog(errorMessage);
@@ -102,7 +106,7 @@ class _LogInScreenState extends State<LogInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        reverse: true,
+        // reverse: true,
         padding: EdgeInsets.only(bottom: 0),
         children: [
           Container(
@@ -258,24 +262,32 @@ class _LogInScreenState extends State<LogInScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Repeat you password',
+                                    'Phone number',
                                     style: TextStyle(
                                       fontSize: 15.sp,
                                       color: Color.fromRGBO(0, 0, 0, 0.4),
                                     ),
                                   ),
                                   TextFormField(
+                                    maxLength: 10,
+                                    keyboardType: TextInputType.phone,
                                     enabled: _authMode == AuthMode.Signup,
                                     style: TextStyle(fontSize: 17.sp),
-                                    obscureText: true,
                                     validator: _authMode == AuthMode.Signup
                                         ? (value) {
-                                            if (value !=
-                                                _passwordController.text) {
-                                              return 'Passwords do not match!';
+                                            if (value!.isEmpty ||
+                                                value.length < 10) {
+                                              return 'Please enter a valid phone number';
+                                            }
+                                            if (!(value[0] == '0') ||
+                                                !(value[1] == '7')) {
+                                              return 'Not a valid number';
                                             }
                                           }
                                         : null,
+                                    onSaved: (value) {
+                                      _authData['phone'] = value.toString();
+                                    },
                                   ),
                                 ],
                               ),
@@ -302,7 +314,7 @@ class _LogInScreenState extends State<LogInScreen> {
               ),
             ),
           ),
-        ].reversed.toList(),
+        ].toList(),
       ),
     );
   }

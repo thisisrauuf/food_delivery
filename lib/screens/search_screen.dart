@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery/components/appBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_delivery/providers/foods_provider.dart';
 import 'package:food_delivery/screens/food_details_screen.dart';
@@ -7,19 +6,16 @@ import 'package:provider/provider.dart';
 import '../constants.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class SearchScreen extends StatefulWidget {
+class SearchScreen extends StatelessWidget {
   static String routName = 'search-screen';
 
-  @override
-  _SearchScreenState createState() => _SearchScreenState();
-}
-
-class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     var searchResult = ModalRoute.of(context)!.settings.arguments as String;
     final List<Food> foodsResult =
         Provider.of<Foods>(context, listen: false).searchFood(searchResult);
+    var textController = TextEditingController();
+    textController.text = searchResult;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -50,13 +46,9 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: Container(
                   alignment: Alignment.center,
                   child: TextField(
-                      decoration: InputDecoration(
-                          border: InputBorder.none, hintText: searchResult),
-                      onSubmitted: (value) {
-                        setState(() {
-                          searchResult = value;
-                        });
-                      }),
+                      controller: textController,
+                      decoration: InputDecoration(border: InputBorder.none),
+                      onSubmitted: (value) {}),
                 ),
               ),
               Expanded(

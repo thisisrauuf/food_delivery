@@ -25,6 +25,9 @@ class SearchBar extends StatelessWidget {
         padding:
             EdgeInsets.only(right: 35.w, top: 21.h, bottom: 21.h, left: 16.w),
         onSubmitted: (value) {
+          if (value == '') {
+            return null;
+          }
           Navigator.pushNamed(context, SearchScreen.routName, arguments: value);
         },
       ),
