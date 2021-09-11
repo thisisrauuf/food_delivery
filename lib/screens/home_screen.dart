@@ -101,15 +101,15 @@ class _FoodsCarouselState extends State<FoodsCarousel> {
   );
   int selectedIndex = 0;
   // bool _isInit = true;
-  @override
-  void initState() {
-    Future.delayed(Duration.zero).then((_) => {
-          Provider.of<Foods>(context, listen: false).fetchData(),
-        });
-    // .then(
-    //     (_) => {Provider.of<Orders>(context, listen: false).fetchOrders()});
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   Future.delayed(Duration.zero).then((_) => {
+  //         Provider.of<Foods>(context, listen: false).fetchData(),
+  //       });
+  //   // .then(
+  //   //     (_) => {Provider.of<Orders>(context, listen: false).fetchOrders()});
+  //   super.initState();
+  // }
   // void didChangeDependencies() {
   //   if (_isInit) {
   //     Provider.of<Foods>(context).fetchData();

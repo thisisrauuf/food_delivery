@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/components/appBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_delivery/providers/profile_provider.dart';
+import 'package:provider/provider.dart';
 
 class MyProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Profile profileInfos = Provider.of<ProfileInfos>(context).profileInfos;
     return Scaffold(
       appBar: buildAppBar(
         context,
@@ -72,7 +75,7 @@ class MyProfileScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            'abderaouf.tiouche@gmail.com',
+                            profileInfos.email,
                             style: TextStyle(
                               fontSize: 13.sp,
                               fontWeight: FontWeight.w400,

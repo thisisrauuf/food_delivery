@@ -275,13 +275,8 @@ class _LogInScreenState extends State<LogInScreen> {
                                     style: TextStyle(fontSize: 17.sp),
                                     validator: _authMode == AuthMode.Signup
                                         ? (value) {
-                                            if (value!.isEmpty ||
-                                                value.length < 10) {
-                                              return 'Please enter a valid phone number';
-                                            }
-                                            if (!(value[0] == '0') ||
-                                                !(value[1] == '7')) {
-                                              return 'Not a valid number';
+                                            if (value![0] != '0') {
+                                              return 'Invalid Number';
                                             }
                                           }
                                         : null,

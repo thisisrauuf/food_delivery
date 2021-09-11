@@ -268,6 +268,21 @@
     // }
 // ------------------------------------------------------
 
+// focusedBorder: OutlineInputBorder(
+//                               borderRadius: BorderRadius.circular(10.0),
+//                               borderSide: BorderSide(
+//                                 color: kOrangeColor,
+//                                 width: 2.0,
+//                               ),
+//                             ),
+//                             enabledBorder: OutlineInputBorder(
+//                               borderRadius: BorderRadius.circular(10.0),
+//                               borderSide: BorderSide(
+//                                 color: kOrangeColor,
+//                                 width: 1.5,
+//                               ),
+//                             ),
+
     // Food(
     //     id: 'f1',
     //     name: 'Steak plat',

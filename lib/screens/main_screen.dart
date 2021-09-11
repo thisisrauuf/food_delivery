@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/constants.dart';
+import 'package:food_delivery/providers/foods_provider.dart';
+import 'package:food_delivery/providers/profile_provider.dart';
 import 'package:food_delivery/screens/favourite_screen.dart';
 import 'package:food_delivery/screens/history_screen.dart';
 import 'package:food_delivery/screens/home_screen.dart';
 import 'package:food_delivery/screens/my_profile.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   static const routeName = '/main-screen';
@@ -13,6 +16,19 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  @override
+  void initState() {
+    Future.delayed(Duration.zero)
+        .then((_) => {
+              Provider.of<Foods>(context, listen: false).fetchData(),
+            })
+        .then((value) => {
+              Provider.of<ProfileInfos>(context, listen: false)
+                  .fetchProfileData(),
+            });
+    super.initState();
+  }
+
   int _currentIndex = 0;
 
   final _currentTab = [

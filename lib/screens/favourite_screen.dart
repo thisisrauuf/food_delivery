@@ -19,14 +19,7 @@ class FavouriteScreen extends StatelessWidget {
         context,
         title: 'Favourites',
         actions: Container(),
-        leading: IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.chevron_left,
-            color: Colors.black,
-            size: 31.w,
-          ),
-        ),
+        leading: Container(),
       ),
       body: favouriteFoods.length == 0
           ? Column(
