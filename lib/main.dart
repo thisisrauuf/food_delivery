@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery/providers/auth.dart';
 import 'package:food_delivery/providers/profile_provider.dart';
-import 'package:food_delivery/screens/login2.dart';
 import 'package:food_delivery/screens/login_screen.dart';
 import 'package:food_delivery/screens/order_infos_screen.dart';
 import 'package:food_delivery/screens/search_screen.dart';
@@ -76,7 +75,7 @@ class MyApp extends StatelessWidget {
               if (userSnapshot.hasData) {
                 return MainScreen();
               }
-              return LoginScreen2();
+              return LoginScreen();
             },
           ),
           routes: {
